@@ -2,11 +2,20 @@
     <div>
       <header class="shadow-sm bg-white">
           <nav class="container mx-auto p-4 flex justify-between items-center">
-              <NuxtLink to="/" class="font-bold flex gap-2 items-center"><img class="w-16" src="../assets/content/logo.svg"/><span class="router-link-exact-active">BEEMO</span></NuxtLink>
-              <ul class="flex gap-4 align-middle">
-                  <li><NuxtLink to="/">Home</NuxtLink></li>
-                  <li><NuxtLink to="/about">About</NuxtLink></li>
-                  <li><NuxtLink to="/budgets">Budgets</NuxtLink></li>
+              <NuxtLink to="/" class="font-bold flex gap-2 items-center"><img class="w-48" src="../assets/content/logo.svg"/></NuxtLink>
+              <ul class="flex gap-4 items-center">
+                  <li><NuxtLink to="/"><p>Home</p></NuxtLink></li>
+                  <li><NuxtLink to="/about"><p>About</p></NuxtLink></li>
+                  <li><NuxtLink to="/budgets"><p>Budgets</p></NuxtLink></li>
+                  <li class="border-l"><!-- Conditionally render login button or user profile thumbnail -->
+                    <template v-if="!isAuthenticated">
+                      <NuxtLink to="/authenticate"><p class="btn ml-4">Login</p></NuxtLink>
+                    </template>
+                    <template v-else>
+                    <!-- Render user profile thumbnail here -->
+                    <img src="../assets/content/logo.svg" alt="User Profile" class="w-8 h-8 rounded-full ml-4">
+                    </template>
+                  </li>
               </ul>
           </nav>
       </header>
@@ -26,3 +35,13 @@
     color: #12b488;
   }
 </style>
+
+<script setup>
+import { useMainStore } from "~/store";
+
+const store = useMainStore();
+
+const isAuthenticated = computed(() => {
+  return store.isAuthenticated;
+});
+</script>
