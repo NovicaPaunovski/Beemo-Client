@@ -7,9 +7,12 @@
                   <li><NuxtLink to="/"><p>Home</p></NuxtLink></li>
                   <li><NuxtLink to="/about"><p>About</p></NuxtLink></li>
                   <li><NuxtLink to="/budgets"><p>Budgets</p></NuxtLink></li>
-                  <li class="border-l"><!-- Conditionally render login button or user profile thumbnail -->
+                  <li class="border-l">
                     <template v-if="!isAuthenticated">
-                      <NuxtLink to="/authenticate"><p class="btn ml-4">Login</p></NuxtLink>
+                      <button class="btn ml-4" @click="() => open()">Login</button>
+                      <NuxtLink to="/sign-up">
+                        <button class="btn-secondary ml-2">Sign Up</button>
+                      </NuxtLink>
                     </template>
                     <template v-else>
                     <!-- Render user profile thumbnail here -->
@@ -19,7 +22,7 @@
               </ul>
           </nav>
       </header>
-
+      <ModalsContainer />
       <div class="container mx-auto p-4">
         <slot />
       </div>
@@ -38,6 +41,17 @@
 
 <script setup>
 import { useMainStore } from "~/store";
+import { ModalsContainer, useModal } from "vue-final-modal";
+import LoginModal from "~/components/authentication/LoginModal.vue";
+
+const { open, close } = useModal({
+    component: LoginModal,
+    attrs: {
+      onConfirm() {
+        close()
+      },
+    },
+  })
 
 const store = useMainStore();
 

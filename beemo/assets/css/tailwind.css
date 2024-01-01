@@ -11,6 +11,10 @@ body {
         @apply bg-[#12b488] text-white px-3 py-2 rounded-md text-sm text-white;
     }
 
+    .btn-secondary {
+        @apply bg-[#52528C] text-white px-3 py-2 rounded-md text-sm text-white;
+    }
+
     .card {
         @apply p-3 rounded-md bg-white shadow-md h-full;
     }
