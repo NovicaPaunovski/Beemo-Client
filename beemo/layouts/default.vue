@@ -9,7 +9,7 @@
                   <li class="border-l">
                     <template v-if="!isAuthenticated">
                       <div class="flex">
-                        <button class="btn ml-4" @click="() => open()">Login</button>
+                        <button class="btn ml-4" @click="() => open()">Log In</button>
                         <NuxtLink to="/sign-up" class="ml-2">
                           <button class="btn-secondary">Sign Up</button>
                         </NuxtLink>
