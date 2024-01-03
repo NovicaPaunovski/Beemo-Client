@@ -7,7 +7,7 @@
                   <li><NuxtLink to="/"><p>Home</p></NuxtLink></li>
                   <li><NuxtLink to="/budgets"><p>Budgets</p></NuxtLink></li>
                   <li class="border-l">
-                    <template v-if="!isAuthenticated">
+                    <template v-if="!authenticated">
                       <div class="flex">
                         <button class="btn ml-4" @click="() => open()">Log In</button>
                         <NuxtLink to="/sign-up" class="ml-2">
@@ -40,9 +40,13 @@
 </style>
 
 <script setup>
-import { useMainStore } from "~/store";
+import { storeToRefs } from "pinia";
+import { useAuthStore } from "~/store/authentication";
 import { ModalsContainer, useModal } from "vue-final-modal";
 import LoginModal from "~/components/authentication/LoginModal.vue";
+
+const { authenticated } = storeToRefs(useAuthStore());
+const router = useRouter();
 
 const { open, close } = useModal({
     component: LoginModal,
@@ -53,9 +57,8 @@ const { open, close } = useModal({
     },
   })
 
-const store = useMainStore();
-
-const isAuthenticated = computed(() => {
-  return store.isAuthenticated;
-});
+const logout = () => {
+  logUserOut();
+  router.push("/");
+}
 </script>

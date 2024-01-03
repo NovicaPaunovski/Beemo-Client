@@ -9,13 +9,13 @@ import type { NuxtLink } from '#build/components';
 
     <div class="mt-7 max-w-sm mx-auto text-center card">
       <h1 class="text-xl mt-4">Login to Beemo</h1>
-      <form @submit.prevent="login" class="mt-7 mx-4 px-4 rounded border-t">
+      <form @submit.prevent="handleLogin" class="mt-7 mx-4 px-4 rounded border-t">
         <div class="mt-4">
           <label for="username" class="block text-left text-gray-600">Username:</label>
           <input
             type="text"
             id="username"
-            v-model="username"
+            v-model="form.username"
             class="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500"
           />
         </div>
@@ -25,7 +25,7 @@ import type { NuxtLink } from '#build/components';
           <input
             type="password"
             id="password"
-            v-model="password"
+            v-model="form.password"
             class="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500"
           />
         </div>
@@ -35,7 +35,9 @@ import type { NuxtLink } from '#build/components';
             <input type="checkbox" class="w-4 h-4 checkbox"/>
             <label class="ml-2 text-gray-600">Remember me</label>
           </div>
-          <button type="submit" class="btn mt-4">
+          <button :disabled="isLoading" type="submit" class="btn mt-4" :class="{
+            'opacity-20 cursor-not-allowed': isLoading,
+          }">
             Login
           </button>
         </div>
@@ -56,24 +58,30 @@ import type { NuxtLink } from '#build/components';
 
 <script setup lang="ts">
 import { VueFinalModal } from 'vue-final-modal';
-import { useMainStore } from "~/store";
+import { useAuthStore } from '~/store/authentication';
 
-const store = useMainStore();
+const { authenticateUser } = useAuthStore();
+const { authenticated } = storeToRefs(useAuthStore());
+const form = ref({
+  username: '',
+  password: ''
+})
 
-const username = ref('');
-const password = ref('');
+const handleLogin = async () => {
+  await authenticateUser(form.value);
+
+  if (!authenticated) {
+    // TODO: Add not authenticated toasts
+    return;
+  }
+
+  emit('confirm');
+};
 
 const emit = defineEmits<{
   (e: 'confirm'): void
 }>()
-
-const login = () => {
-  // Implement your login logic here
-  console.log('Logging in with', username.value, password.value);
-
-  // Close the modal after login
-  emit('confirm');
-};
+const isLoading = ref(false);
 </script>
 
 <style scoped>

@@ -50,7 +50,7 @@
         </div>
 
         <div class="flex justify-center mt-6">
-          <button type="submit" class="btn-secondary">
+          <button :disabled="isLoading" type="submit" class="btn-secondary" :class="{'opacity-20 cursor-not-allowed': isLoading}">
             Sign Up
           </button>
         </div>
@@ -65,7 +65,7 @@
 </template>
 
 <script setup>
-
+const isLoading = ref(false);
 </script>
 
 <style scoped>
