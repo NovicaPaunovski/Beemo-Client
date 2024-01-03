@@ -3,8 +3,10 @@
         <div class="min-h-screen">
             <h2>Home</h2>
             <p>Welcome to Beemo!</p>
-            <p>Beemo is made as a non profit passion project intended to help users manage their finances and spendings. Be diligent as a bee and keep track of your spendings.</p>
+            <p>Beemo is made as a non-profit passion project intended to help users manage their finances and spendings. Be diligent as a bee and keep track of your spendings.</p>
             <p>For more information please check the <NuxtLink to="/about" class="cursor-pointer text-blue-500">Beemo Terms and Conditions</NuxtLink>.</p>
+
+            <p>To get started with using Beemo for tracking your spendings, read the <NuxtLink to="introduction"><button class="btn-secondary px-2">Introduction to Beemo</button></NuxtLink></p>
         </div>
         
         <footer class="sticky bottom-1 border rounded-md p-2">
@@ -14,7 +16,10 @@
 </template>
 
 <script setup>
+import { storeToRefs } from "pinia";
+import { useAuthStore } from "~/store/authentication";
 
+const { authenticated } = storeToRefs(useAuthStore());
 </script>
 
 <style scoped>

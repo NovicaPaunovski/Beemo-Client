@@ -2,21 +2,20 @@
     <div>
       <header class="shadow-sm bg-white">
           <nav class="container mx-auto p-4 flex justify-between items-center">
-              <NuxtLink to="/" class="font-bold flex gap-2 items-center mr-5"><img class="w-48" src="../assets/content/logo.svg"/></NuxtLink>
+              <NuxtLink to="/" class="font-bold flex gap-2 items-center mr-5">
+                <img class="w-48 min-w-24" src="../assets/content/logo.svg"/>
+              </NuxtLink>
               <ul class="flex gap-4 items-center">
-                  <li><NuxtLink to="/"><p class="text-xl">Home</p></NuxtLink></li>
+                  <li><NuxtLink to="/"><p class="text-lg">Home</p></NuxtLink></li>
                   <template v-if="authenticated">
-                    <li><NuxtLink to="/dashboard"><p class="text-xl">Dashboard</p></NuxtLink></li>
-                  </template>
-                  <template v-if="authenticated">
-                    <li><NuxtLink to="/budgets"><p class="text-xl">Budgets</p></NuxtLink></li>
+                    <li><NuxtLink to="/budgets"><p class="text-lg">Budgets</p></NuxtLink></li>
                   </template>
                   <li class="border-l">
                     <template v-if="!authenticated">
                       <div class="flex">
-                        <button class="btn ml-4" @click="() => open()">Log In</button>
+                        <button class="btn ml-4 max-h-9" @click="() => open()"><p class="whitespace-nowrap">Log In</p></button>
                         <NuxtLink to="/sign-up" class="ml-2">
-                          <button class="btn-secondary">Sign Up</button>
+                          <button class="btn-secondary max-h-9"><p class="whitespace-nowrap">Sign Up</p></button>
                         </NuxtLink>
                       </div>
                     </template>
