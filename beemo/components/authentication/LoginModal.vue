@@ -8,8 +8,19 @@ import type { NuxtLink } from '#build/components';
     content-transition="vfm-fade">
 
     <div class="mt-7 max-w-sm mx-auto text-center card">
-      <h1 class="text-xl mt-4">Login to Beemo</h1>
+      <div class="flex justify-between items-center mt-2">
+          <h1 class="pl-24 text-xl">Login to Beemo</h1>
+          <button
+            class="p-1 mr-2 rounded-full text-gray-500 hover:text-black hover:bg-gray-200 transition ease-in-out duration-150"
+            @click="emit('confirm')"
+            >
+              <i class="material-icons mt-1">close</i>
+            </button>
+        </div>
       <form @submit.prevent="handleLogin" class="mt-7 mx-4 px-4 rounded border-t">
+        <template v-if="failed">
+            <label class="block text-left text-red-600">Could not log in. Please check your credentials and try again.</label>
+          </template>
         <div class="mt-4">
           <label for="username" class="block text-left text-gray-600">Username:</label>
           <input
@@ -35,8 +46,8 @@ import type { NuxtLink } from '#build/components';
             <input type="checkbox" class="w-4 h-4 checkbox"/>
             <label class="ml-2 text-gray-600">Remember me</label>
           </div>
-          <button :disabled="isLoading" type="submit" class="btn mt-4" :class="{
-            'opacity-20 cursor-not-allowed': isLoading,
+          <button :disabled="loading" type="submit" class="btn mt-4" :class="{
+            'opacity-20 cursor-not-allowed': loading,
           }">
             Login
           </button>
@@ -61,27 +72,29 @@ import { VueFinalModal } from 'vue-final-modal';
 import { useAuthStore } from '~/store/authentication';
 
 const { authenticateUser } = useAuthStore();
-const { authenticated } = storeToRefs(useAuthStore());
+const { authenticated, loading } = storeToRefs(useAuthStore());
+
+const failed = ref(false);
 const form = ref({
   username: '',
   password: ''
 })
 
 const handleLogin = async () => {
-  await authenticateUser(form.value);
+  const status = await authenticateUser(form.value);
 
-  if (!authenticated) {
-    // TODO: Add not authenticated toasts
+  if (authenticated.value) {
+    failed.value = false;
+    emit('confirm');
     return;
   }
 
-  emit('confirm');
+  failed.value = true;
 };
 
 const emit = defineEmits<{
   (e: 'confirm'): void
 }>()
-const isLoading = ref(false);
 </script>
 
 <style scoped>

@@ -12,21 +12,22 @@ export const useAuthStore = defineStore('auth', {
   }),
   actions: {
     async authenticateUser({ username, password }: IUserPayload) {
-      const { data, pending }: any = await useFetch('https://localhost:7186/api/users/authenticate', {
-        method: 'post',
-        headers: { 'Content-Type': 'application/json' },
-        body: {
-          username,
-          password,
-        },
-      });
-      this.loading = pending;
+      const { data, pending, error, status }: any = await useFetch('https://localhost:7186/api/users/authenticate', {
+          method: 'post',
+          headers: { 'Content-Type': 'application/json' },
+          body: {
+            username,
+            password,
+          },
+        });
 
-      if (data.value) {
-        const token = useCookie('token');
-        token.value = data?.value?.token;
-        this.authenticated = true;
-      }
+        this.loading = pending;
+
+        if (data.value) {
+          const token = useCookie('token');
+          token.value = data?.value?.token;
+          this.authenticated = true;
+        }
     },
     logUserOut() {
       const token = useCookie('token');

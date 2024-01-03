@@ -4,8 +4,13 @@
           <nav class="container mx-auto p-4 flex justify-between items-center">
               <NuxtLink to="/" class="font-bold flex gap-2 items-center mr-5"><img class="w-48" src="../assets/content/logo.svg"/></NuxtLink>
               <ul class="flex gap-4 items-center">
-                  <li><NuxtLink to="/"><p>Home</p></NuxtLink></li>
-                  <li><NuxtLink to="/budgets"><p>Budgets</p></NuxtLink></li>
+                  <li><NuxtLink to="/"><p class="text-xl">Home</p></NuxtLink></li>
+                  <template v-if="authenticated">
+                    <li><NuxtLink to="/dashboard"><p class="text-xl">Dashboard</p></NuxtLink></li>
+                  </template>
+                  <template v-if="authenticated">
+                    <li><NuxtLink to="/budgets"><p class="text-xl">Budgets</p></NuxtLink></li>
+                  </template>
                   <li class="border-l">
                     <template v-if="!authenticated">
                       <div class="flex">
@@ -16,7 +21,7 @@
                       </div>
                     </template>
                     <template v-else>
-                    <img src="../assets/content/logo.svg" alt="User Profile" class="w-8 h-8 rounded-full ml-4">
+                      <Dropdown class="ml-2"></Dropdown>
                     </template>
                   </li>
               </ul>
@@ -44,6 +49,7 @@ import { storeToRefs } from "pinia";
 import { useAuthStore } from "~/store/authentication";
 import { ModalsContainer, useModal } from "vue-final-modal";
 import LoginModal from "~/components/authentication/LoginModal.vue";
+import Dropdown from "~/components/navbar/Dropdown.vue";
 
 const { authenticated } = storeToRefs(useAuthStore());
 const router = useRouter();
