@@ -10,17 +10,25 @@
         class="absolute z-10 w-56 mt-2 origin-top-right bg-white rounded-md shadow-lg left-0 ring-1 ring-black ring-opacity-5 focus:outline-none">
         <div class="py-1">
           <NuxtLink to="/profile" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Profile</NuxtLink>
-          <NuxtLink to="/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Log Out</NuxtLink>
+          <span @click="logout" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer">Log Out</span>
         </div>
       </div>
     </div>
   </template>
 
 <script setup>
-const isDropdownOpen = ref(false)
+import { useAuthStore } from "~/store/authentication";
 
+const isDropdownOpen = ref(false)
 const toggleDropdown = () => {
   isDropdownOpen.value = !isDropdownOpen.value
+}
+
+const router = useRouter();
+const { logUserOut } = useAuthStore();
+const logout = () => {
+  logUserOut();
+  router.push("/");
 }
 </script>
 

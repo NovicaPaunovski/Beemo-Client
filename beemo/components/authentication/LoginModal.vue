@@ -81,7 +81,7 @@ const form = ref({
 })
 
 const handleLogin = async () => {
-  const status = await authenticateUser(form.value);
+  await authenticateUser(form.value);
 
   if (authenticated.value) {
     failed.value = false;

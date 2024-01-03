@@ -52,7 +52,6 @@ import LoginModal from "~/components/authentication/LoginModal.vue";
 import Dropdown from "~/components/navbar/Dropdown.vue";
 
 const { authenticated } = storeToRefs(useAuthStore());
-const router = useRouter();
 
 const { open, close } = useModal({
     component: LoginModal,
@@ -62,9 +61,4 @@ const { open, close } = useModal({
       },
     },
   })
-
-const logout = () => {
-  logUserOut();
-  router.push("/");
-}
 </script>
