@@ -11,10 +11,4 @@ export default defineNuxtRouteMiddleware((to) => {
     if (token.value && to?.name === 'sign-up') {
       return navigateTo('/');
     }
-  
-    // Secure a route example (replace login)
-    if (!token.value && to?.name !== 'login') {
-      abortNavigation();
-      return navigateTo('/');
-    }
   });
