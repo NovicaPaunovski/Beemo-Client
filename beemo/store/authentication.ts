@@ -5,10 +5,18 @@ interface IUserPayload {
   password: string;
 }
 
+interface IUserSignupPayload {
+  username: string;
+  email: string,
+  password: string;
+  confirmPassword: string
+}
+
 export const useAuthStore = defineStore('auth', {
   state: () => ({
     authenticated: false,
     loading: false,
+    failed: false
   }),
   actions: {
     async authenticateUser({ username, password }: IUserPayload) {
@@ -28,6 +36,9 @@ export const useAuthStore = defineStore('auth', {
           token.value = data?.value?.token;
           this.authenticated = true;
         }
+    },
+    async registerUser({ username, email, password, confirmPassword }: IUserSignupPayload) {
+      console.log(`${username} | ${email}`);
     },
     logUserOut() {
       const token = useCookie('token');
