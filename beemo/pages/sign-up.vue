@@ -2,27 +2,29 @@
     <div class="mt-7 max-w-sm mx-auto text-center card">
       <h1 class="text-xl mt-4">Sign up to Beemo</h1>
       <form @submit.prevent="handleSignup" class="mt-7 mx-4 px-4 rounded border-t">
-        <label v-show="invalid.name" for="name" class="mt-4 block text-left text-red-500">Please enter your full name.</label>
-        <div id="name" class="flex w-full">
-          <div>
-            <label for="first-name" class="block text-left text-gray-600">First name:</label>
-            <input
-              @blur="() => validNameRule(form.firstName)"
-              type="text"
-              id="first-name"
-              v-model="form.firstName"
-              class="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500"
-            />
-          </div>
-          <div class="ml-2">
-            <label for="last-name" class="block text-left text-gray-600">Last name:</label>
-            <input
-            @blur="() => validNameRule(form.lastName)"
-              type="text"
-              id="last-name"
-              v-model="form.lastName"
-              class="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500"
-            />
+        <div class="mt-4">
+          <label v-show="invalid.name" for="name" class="block text-left text-red-500">Please enter your full name.</label>
+          <div id="name" class="flex w-full">
+            <div>
+              <label for="first-name" class="block text-left text-gray-600">First name:</label>
+              <input
+                @blur="() => validNameRule(form.firstName)"
+                type="text"
+                id="first-name"
+                v-model="form.firstName"
+                class="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500"
+              />
+            </div>
+            <div class="ml-2">
+              <label for="last-name" class="block text-left text-gray-600">Last name:</label>
+              <input
+              @blur="() => validNameRule(form.lastName)"
+                type="text"
+                id="last-name"
+                v-model="form.lastName"
+                class="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500"
+              />
+            </div>
           </div>
         </div>
 
@@ -154,7 +156,7 @@ const handleSignup = async () => {
 }
 
 const validNameRule = (value : string) => {
-  invalid.value.name = !/^[a-zA-Z]+$/.test(value);
+  invalid.value.name = value != '' && !/^[a-zA-Z]+$/.test(value);
 }
 
 const validUsernameRule = () => {

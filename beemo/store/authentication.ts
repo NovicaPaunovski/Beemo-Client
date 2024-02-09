@@ -6,10 +6,11 @@ interface IUserPayload {
 }
 
 interface IUserSignupPayload {
+  firstName: string,
+  lastName: string,
   username: string;
   email: string,
   password: string;
-  confirmPassword: string
 }
 
 export const useAuthStore = defineStore('auth', {
@@ -37,8 +38,18 @@ export const useAuthStore = defineStore('auth', {
           this.authenticated = true;
         }
     },
-    async registerUser({ username, email, password, confirmPassword }: IUserSignupPayload) {
-      console.log(`${username} | ${email}`);
+    async registerUser({ firstName, lastName, username, email, password }: IUserSignupPayload) {
+      const { data, pending, error, status }: any = await useFetch('https://localhost:7186/api/users/register', {
+          method: 'post',
+          headers: { 'Content-Type': 'application/json' },
+          body: {
+            firstName,
+            lastName,
+            email,
+            username,
+            password,
+          },
+        });
     },
     logUserOut() {
       const token = useCookie('token');
